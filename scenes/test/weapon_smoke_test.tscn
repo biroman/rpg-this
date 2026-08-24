@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scenes/test/weapon_smoke_test.gd" id="1_test"]
+[ext_resource type="PackedScene" path="res://scenes/main/main.tscn" id="2_main"]
+
+[node name="WeaponSmokeTest" type="Node"]
+script = ExtResource("1_test")
+
+[node name="Main" parent="." instance=ExtResource("2_main")]

@@ -1,0 +1,18 @@
+# Godot 4+ specific ignores
+.godot/
+/android/
+
+# Exported builds
+/build/
+/export/
+*.exe
+*.pck
+*.zip
+
+# Editor / OS junk
+.DS_Store
+Thumbs.db
+*.swp
+
+# Test output
+tools/last_smoke_test.log

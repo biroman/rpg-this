@@ -1,0 +1,101 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://scenes/player/player.gd" id="1_player"]
+[ext_resource type="Script" path="res://scenes/weapons/weapon_rig.gd" id="2_rig"]
+[ext_resource type="PackedScene" path="res://scenes/weapons/rocket_launcher.tscn" id="3_launcher"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_body"]
+radius = 0.35
+height = 1.8
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_body"]
+radius = 0.35
+height = 1.8
+
+[sub_resource type="Environment" id="Environment_viewmodel"]
+background_mode = 0
+ambient_light_source = 2
+ambient_light_color = Color(0.54902, 0.6, 0.701961, 1)
+ambient_light_energy = 0.75
+tonemap_mode = 4
+tonemap_white = 6.0
+
+[node name="Player" type="CharacterBody3D"]
+collision_layer = 2
+collision_mask = 1
+floor_max_angle = 0.959931
+floor_snap_length = 0.3
+script = ExtResource("1_player")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+shape = SubResource("CapsuleShape3D_body")
+
+[node name="BodyMesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+cast_shadow = 3
+mesh = SubResource("CapsuleMesh_body")
+
+[node name="CeilingCheck" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 0)
+target_position = Vector3(0, 0.75, 0)
+collision_mask = 1
+
+[node name="Head" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.62, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Head"]
+current = true
+fov = 75.0
+near = 0.05
+far = 3000.0
+
+[node name="InteractRay" type="RayCast3D" parent="Head/Camera3D"]
+target_position = Vector3(0, 0, -3)
+collision_mask = 1
+
+[node name="ViewmodelLayer" type="CanvasLayer" parent="Head/Camera3D"]
+layer = 0
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="Head/Camera3D/ViewmodelLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="Head/Camera3D/ViewmodelLayer/SubViewportContainer"]
+own_world_3d = true
+transparent_bg = true
+handle_input_locally = false
+msaa_3d = 1
+size = Vector2i(1600, 900)
+render_target_update_mode = 4
+
+[node name="ViewmodelEnvironment" type="WorldEnvironment" parent="Head/Camera3D/ViewmodelLayer/SubViewportContainer/SubViewport"]
+environment = SubResource("Environment_viewmodel")
+
+[node name="KeyLight" type="DirectionalLight3D" parent="Head/Camera3D/ViewmodelLayer/SubViewportContainer/SubViewport"]
+transform = Transform3D(0.7433, 0, 0.669, 0.498, 0.6677, -0.5533, -0.4467, 0.7444, 0.4963, 0, 0, 0)
+light_energy = 1.7
+shadow_enabled = true
+directional_shadow_max_distance = 6.0
+
+[node name="FillLight" type="DirectionalLight3D" parent="Head/Camera3D/ViewmodelLayer/SubViewportContainer/SubViewport"]
+transform = Transform3D(0.8272, 0, -0.5617, -0.1124, 0.9798, -0.1655, 0.5504, 0.2001, 0.8106, 0, 0, 0)
+light_color = Color(0.784314, 0.85098, 1, 1)
+light_energy = 0.45
+
+[node name="ViewmodelCamera" type="Camera3D" parent="Head/Camera3D/ViewmodelLayer/SubViewportContainer/SubViewport"]
+current = true
+fov = 58.0
+near = 0.01
+far = 12.0
+
+[node name="WeaponRig" type="Node3D" parent="Head/Camera3D/ViewmodelLayer/SubViewportContainer/SubViewport/ViewmodelCamera"]
+unique_name_in_owner = true
+script = ExtResource("2_rig")
+
+[node name="RocketLauncher" parent="Head/Camera3D/ViewmodelLayer/SubViewportContainer/SubViewport/ViewmodelCamera/WeaponRig" instance=ExtResource("3_launcher")]
