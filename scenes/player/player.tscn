@@ -15,10 +15,10 @@ height = 1.8
 [sub_resource type="Environment" id="Environment_viewmodel"]
 background_mode = 0
 ambient_light_source = 2
-ambient_light_color = Color(0.54902, 0.6, 0.701961, 1)
-ambient_light_energy = 0.75
-tonemap_mode = 4
-tonemap_white = 6.0
+ambient_light_color = Color(0.94902, 0.945098, 0.933333, 1)
+ambient_light_energy = 0.8
+tonemap_mode = 0
+tonemap_white = 1.0
 
 [node name="Player" type="CharacterBody3D"]
 collision_layer = 2
@@ -79,14 +79,16 @@ environment = SubResource("Environment_viewmodel")
 
 [node name="KeyLight" type="DirectionalLight3D" parent="Head/Camera3D/ViewmodelLayer/SubViewportContainer/SubViewport"]
 transform = Transform3D(0.7433, 0, 0.669, 0.498, 0.6677, -0.5533, -0.4467, 0.7444, 0.4963, 0, 0, 0)
-light_energy = 1.7
+light_color = Color(1, 0.988235, 0.952941, 1)
+light_energy = 0.45
 shadow_enabled = true
+shadow_opacity = 0.3
 directional_shadow_max_distance = 6.0
 
 [node name="FillLight" type="DirectionalLight3D" parent="Head/Camera3D/ViewmodelLayer/SubViewportContainer/SubViewport"]
 transform = Transform3D(0.8272, 0, -0.5617, -0.1124, 0.9798, -0.1655, 0.5504, 0.2001, 0.8106, 0, 0, 0)
-light_color = Color(0.784314, 0.85098, 1, 1)
-light_energy = 0.45
+light_color = Color(0.662745, 0.85098, 0.917647, 1)
+light_energy = 0.22
 
 [node name="ViewmodelCamera" type="Camera3D" parent="Head/Camera3D/ViewmodelLayer/SubViewportContainer/SubViewport"]
 current = true

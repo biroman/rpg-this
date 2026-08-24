@@ -4,22 +4,24 @@
 [ext_resource type="AudioStream" path="res://assets/audio/target_hit.wav" id="2_ding"]
 
 [sub_resource type="StandardMaterial3D" id="Mat_white"]
-albedo_color = Color(0.913725, 0.905882, 0.878431, 1)
-roughness = 0.8
+albedo_color = Color(0.964706, 0.945098, 0.905882, 1)
+roughness = 1.0
+specular_mode = 2
 
 [sub_resource type="StandardMaterial3D" id="Mat_red"]
-albedo_color = Color(0.658824, 0.117647, 0.0980392, 1)
-roughness = 0.75
+albedo_color = Color(0.956863, 0.321569, 0.431373, 1)
+roughness = 1.0
+specular_mode = 2
 
 [sub_resource type="StandardMaterial3D" id="Mat_gold"]
-albedo_color = Color(0.945098, 0.729412, 0.145098, 1)
-roughness = 0.55
-metallic = 0.15
+albedo_color = Color(0.984314, 0.74902, 0.270588, 1)
+roughness = 1.0
+specular_mode = 2
 
 [sub_resource type="StandardMaterial3D" id="Mat_post"]
-albedo_color = Color(0.207843, 0.211765, 0.223529, 1)
-metallic = 0.7
-roughness = 0.5
+albedo_color = Color(0.231373, 0.290196, 0.419608, 1)
+roughness = 1.0
+specular_mode = 2
 
 [sub_resource type="CylinderMesh" id="Mesh_ring5"]
 material = SubResource("Mat_white")
@@ -66,7 +68,7 @@ material = SubResource("Mat_post")
 top_radius = 0.09
 bottom_radius = 0.09
 height = 2.3
-radial_segments = 12
+radial_segments = 28
 rings = 1
 
 [sub_resource type="CylinderMesh" id="Mesh_base"]
@@ -74,7 +76,7 @@ material = SubResource("Mat_post")
 top_radius = 0.5
 bottom_radius = 0.55
 height = 0.12
-radial_segments = 20
+radial_segments = 32
 rings = 1
 
 [sub_resource type="CylinderShape3D" id="Shape_face"]
@@ -103,6 +105,10 @@ mesh = SubResource("Mesh_post")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.15, -0.15)
 shape = SubResource("Shape_post")
 
+[node name="FaceCollision" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 2.3, 0.06)
+shape = SubResource("Shape_face")
+
 [node name="Face" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3, 0)
 
@@ -126,10 +132,6 @@ mesh = SubResource("Mesh_ring2")
 transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 0, 0.12)
 mesh = SubResource("Mesh_ring1")
 
-[node name="FaceCollision" type="CollisionShape3D" parent="Face"]
-transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 0, 0.06)
-shape = SubResource("Shape_face")
-
 [node name="Centre" type="Marker3D" parent="Face"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.14)
 
@@ -140,13 +142,13 @@ billboard = 1
 shaded = false
 double_sided = true
 text = "100 m"
-font_size = 96
-outline_size = 14
-modulate = Color(1, 1, 1, 0.95)
-outline_modulate = Color(0, 0, 0, 0.7)
+font_size = 110
+outline_size = 22
+modulate = Color(0.137255, 0.14902, 0.172549, 1)
+outline_modulate = Color(0.964706, 0.945098, 0.905882, 0.9)
 
 [node name="Audio" type="AudioStreamPlayer3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3, 0)
 volume_db = 3.0
-unit_size = 320.0
-max_distance = 1600.0
+unit_size = 90.0
+max_distance = 600.0

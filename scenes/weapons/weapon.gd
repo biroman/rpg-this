@@ -92,6 +92,17 @@ func start_reload() -> void:
 	EventBus.weapon_reload_started.emit(reload_time)
 
 
+## Cancels any reload and fills the tube. Used when a level restarts.
+func refill() -> void:
+	_is_reloading = false
+	_reload_timer = 0.0
+	_cooldown = 0.0
+	ammo_in_magazine = magazine_size
+	ammo_reserve = reserve_ammo
+	_announce_ammo()
+	EventBus.weapon_reload_finished.emit()
+
+
 func is_reloading() -> bool:
 	return _is_reloading
 

@@ -1,17 +1,26 @@
 shader_type spatial;
-render_mode cull_back, diffuse_burley, specular_schlick_ggx;
+render_mode cull_back, diffuse_lambert, specular_disabled;
 
-// World-space grid + checker so movement across a huge flat plane stays readable.
+// Warm paper with a faint survey grid ruled on it.
+//
+// The grid is not decoration. This is a flat plane a couple of hundred metres
+// across with nothing on it, and without a ruler on the ground there is no way
+// to read distance or your own speed. So it is kept as light as it can be and
+// still do that job - the major lines carry it, the minor ones fade out before
+// they can turn the middle distance into a moire.
+//
+// Lambert and no specular on purpose: the ground is paper, not a surface with a
+// sheen, and the only thing the light should do to it is shade it.
 
-uniform vec3 base_color : source_color = vec3(0.145, 0.196, 0.129);
-uniform vec3 alt_color : source_color = vec3(0.168, 0.227, 0.149);
-uniform vec3 line_color : source_color = vec3(0.42, 0.52, 0.36);
+uniform vec3 base_color : source_color = vec3(0.965, 0.945, 0.906);
+uniform vec3 alt_color : source_color = vec3(0.945, 0.922, 0.871);
+uniform vec3 line_color : source_color = vec3(0.890, 0.859, 0.788);
 uniform float minor_size = 2.0;
 uniform float major_size = 16.0;
-uniform float minor_strength : hint_range(0.0, 1.0) = 0.30;
-uniform float major_strength : hint_range(0.0, 1.0) = 0.75;
-uniform float minor_fade_distance = 90.0;
-uniform float surface_roughness : hint_range(0.0, 1.0) = 0.92;
+uniform float minor_strength : hint_range(0.0, 1.0) = 0.35;
+uniform float major_strength : hint_range(0.0, 1.0) = 0.85;
+uniform float minor_fade_distance = 70.0;
+uniform float surface_roughness : hint_range(0.0, 1.0) = 1.0;
 
 varying vec3 world_position;
 
@@ -42,5 +51,5 @@ void fragment() {
 
 	ALBEDO = mix(col, line_color, lines);
 	ROUGHNESS = surface_roughness;
-	SPECULAR = 0.15;
+	SPECULAR = 0.0;
 }

@@ -1,16 +1,17 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene load_steps=5 format=3]
 
 [ext_resource type="Script" path="res://scenes/boot/boot.gd" id="1_boot"]
+[ext_resource type="FontFile" path="res://assets/fonts/Nunito-Bold.ttf" id="2_bold"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_boot_bg"]
-bg_color = Color(1, 1, 1, 0.12)
+bg_color = Color(0.890196, 0.858824, 0.788235, 1)
 corner_radius_top_left = 3
 corner_radius_top_right = 3
 corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_boot_fill"]
-bg_color = Color(0.898039, 0.65098, 0.290196, 0.9)
+bg_color = Color(0.984314, 0.74902, 0.270588, 1)
 corner_radius_top_left = 3
 corner_radius_top_right = 3
 corner_radius_bottom_right = 3
@@ -33,7 +34,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-color = Color(0.0784314, 0.0862745, 0.101961, 1)
+color = Color(0.964706, 0.945098, 0.905882, 1)
 
 [node name="Panel" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -54,7 +55,8 @@ theme_override_constants/separation = 14
 [node name="Title" type="Label" parent="Panel"]
 layout_mode = 2
 mouse_filter = 2
-theme_override_colors/font_color = Color(1, 0.827451, 0.278431, 1)
+theme_override_colors/font_color = Color(0.137255, 0.14902, 0.172549, 1)
+theme_override_fonts/font = ExtResource("2_bold")
 theme_override_font_sizes/font_size = 46
 text = "FLATWORLD"
 horizontal_alignment = 1
@@ -63,7 +65,7 @@ horizontal_alignment = 1
 unique_name_in_owner = true
 layout_mode = 2
 mouse_filter = 2
-theme_override_colors/font_color = Color(1, 1, 1, 0.88)
+theme_override_colors/font_color = Color(0.137255, 0.14902, 0.172549, 1)
 theme_override_font_sizes/font_size = 19
 text = "Starting..."
 horizontal_alignment = 1
@@ -81,7 +83,7 @@ show_percentage = false
 unique_name_in_owner = true
 layout_mode = 2
 mouse_filter = 2
-theme_override_colors/font_color = Color(1, 1, 1, 0.55)
+theme_override_colors/font_color = Color(0.482353, 0.505882, 0.552941, 1)
 theme_override_font_sizes/font_size = 15
 text = ""
 horizontal_alignment = 1

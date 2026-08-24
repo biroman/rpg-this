@@ -20,7 +20,7 @@ extends StaticBody3D
 ## Best points a blast-only hit can earn.
 @export var max_blast_points: int = 4
 ## Report near misses that land within this distance of the centre.
-@export var report_miss_within: float = 400.0
+@export var report_miss_within: float = 120.0
 
 @export_group("Feedback")
 @export var hit_sound: AudioStream
@@ -37,19 +37,50 @@ extends StaticBody3D
 var _punch: Tween
 
 
+## Radius taken off the board's rims, the post and the base. See `Rounded`.
+@export var edge_radius: float = 0.03
+
+
 func _ready() -> void:
+	Rounded.soften(self, edge_radius)
 	EventBus.rocket_impact.connect(_on_rocket_impact)
 	EventBus.world_ready.connect(_on_world_ready)
+	EventBus.replay_active.connect(_on_replay_active)
 	distance_label.visible = show_distance_label
 	audio.stream = hit_sound
+	# Watching the replay freezes the tree, and the ding can still be crossing
+	# the range when it opens.
+	audio.process_mode = Node.PROCESS_MODE_ALWAYS
+	# Targets spawned by a level arrive long after `world_ready`, so measure once
+	# the node has its final global transform instead of waiting for the signal.
+	call_deferred("refresh_distance_label")
 
 
-func _on_world_ready(world: Node3D) -> void:
-	if not show_distance_label or world == null:
-		return
+func _on_world_ready(_world: Node3D) -> void:
+	refresh_distance_label()
+
+
+## Distance from the player spawn to this target, on the flat.
+func range_from_spawn() -> float:
+	var world: Node3D = GameState.world
+	if world == null or not is_inside_tree():
+		return 0.0
 	var spawn: Vector3 = (world as World).get_spawn_transform().origin
-	var flat := Vector2(centre.global_position.x - spawn.x, centre.global_position.z - spawn.z)
-	distance_label.text = "%d m" % roundi(flat.length())
+	var here: Vector3 = centre.global_position
+	return Vector2(here.x - spawn.x, here.z - spawn.z).length()
+
+
+func refresh_distance_label() -> void:
+	if not show_distance_label or not is_inside_tree():
+		return
+	distance_label.text = "%d m" % roundi(range_from_spawn())
+
+
+## The range label is sized to be read from the firing line. The replay camera
+## flies right past the target, and up close a metre-high number swallows the
+## screen, so it steps out of the way for the duration.
+func _on_replay_active(is_active: bool) -> void:
+	distance_label.visible = show_distance_label and not is_active
 
 
 # --- scoring ------------------------------------------------------------
@@ -125,10 +156,23 @@ func _is_short(impact: Vector3) -> bool:
 
 # --- feedback -----------------------------------------------------------
 
+## The ding is made out here, not in the player's head, so it travels the range
+## like the blast does. Without this it lands a third of a second before the
+## explosion it is supposed to accompany.
+func _ding_when_it_arrives() -> void:
+	var world: World = GameState.world as World
+	var delay: float = world.sound_delay(centre.global_position) if world != null else 0.0
+	if delay > 0.02:
+		await get_tree().create_timer(delay).timeout
+	if is_instance_valid(audio):
+		audio.play()
+
+
+
 func _react(direct: bool) -> void:
 	if audio.stream != null:
 		audio.pitch_scale = 1.15 if direct else 0.82
-		audio.play()
+		_ding_when_it_arrives()
 
 	if _punch != null and _punch.is_valid():
 		_punch.kill()

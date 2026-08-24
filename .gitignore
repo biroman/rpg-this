@@ -16,3 +16,4 @@ Thumbs.db
 
 # Test output
 tools/last_smoke_test.log
+tools/last_replay_test.log

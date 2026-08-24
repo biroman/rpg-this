@@ -38,6 +38,18 @@ Esc       pause
 F3        debug info
 
 
+THE RANGE
+---------
+Each level puts one target in front of you and tells you how far away it is.
+The rocket arcs, so aim high. Later levels add a crosswind - the compass in the
+top-left shows which way it will push the rocket.
+
+Hit the target and you can watch the shot back from a camera riding the rocket.
+Drag to swing the camera round it, scroll to zoom, and use the bar at the bottom
+to scrub the timeline or drop into slow motion. Or just press SKIP and get on
+with the next level.
+
+
 SOMETHING BROKE?
 ----------------
 Delete the whole FlatWorld folder and download the newest ZIP again from:

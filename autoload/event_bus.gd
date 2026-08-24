@@ -59,3 +59,43 @@ signal target_missed(report: Dictionary)
 ## Score totals changed.
 @warning_ignore("unused_signal")
 signal score_changed()
+
+# --- levels -------------------------------------------------------------
+
+## A level began. `config` is the entry from `LevelManager.LEVELS`.
+@warning_ignore("unused_signal")
+signal level_started(index: int, config: Dictionary)
+
+## The level's target was hit. `report` is the target's hit dictionary.
+@warning_ignore("unused_signal")
+signal level_completed(index: int, report: Dictionary, attempts: int)
+
+## Something asked to move on to the next level (result panel, replay skip).
+@warning_ignore("unused_signal")
+signal next_level_requested()
+
+## The last level was cleared and the range wrapped back to the start.
+@warning_ignore("unused_signal")
+signal range_completed()
+
+## The level's wind changed. Zero means still air.
+@warning_ignore("unused_signal")
+signal wind_changed(wind: Vector3)
+
+# --- replay -------------------------------------------------------------
+
+## A rocket finished its flight and filed a recording.
+@warning_ignore("unused_signal")
+signal shot_recorded(recording: ShotRecording)
+
+## Somebody asked to watch a recording.
+@warning_ignore("unused_signal")
+signal replay_requested(recording: ShotRecording)
+
+## The replay viewer opened or closed.
+@warning_ignore("unused_signal")
+signal replay_active(is_active: bool)
+
+## Gameplay was frozen for a cutscene, panel or replay.
+@warning_ignore("unused_signal")
+signal cinematic_changed(is_active: bool)

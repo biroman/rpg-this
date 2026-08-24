@@ -1,0 +1,260 @@
+[gd_scene load_steps=9 format=3]
+
+[ext_resource type="Script" path="res://scenes/replay/replay_view.gd" id="1_view"]
+[ext_resource type="Script" path="res://scenes/replay/replay_ui.gd" id="2_ui"]
+[ext_resource type="FontFile" path="res://assets/fonts/Nunito-Bold.ttf" id="3_bold"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_blast"]
+radius = 1.0
+height = 2.0
+radial_segments = 24
+rings = 12
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pin"]
+shading_mode = 0
+albedo_color = Color(0.956863, 0.321569, 0.431373, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_pin"]
+material = SubResource("StandardMaterial3D_pin")
+radius = 0.16
+height = 0.32
+radial_segments = 12
+rings = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bar"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.964706, 0.945098, 0.905882, 0.97)
+border_width_top = 1
+border_color = Color(0.890196, 0.858824, 0.788235, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_readout"]
+bg_color = Color(0.964706, 0.945098, 0.905882, 0.9)
+content_margin_left = 14.0
+content_margin_top = 10.0
+content_margin_right = 14.0
+content_margin_bottom = 10.0
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[node name="ReplayView" type="Node3D"]
+script = ExtResource("1_view")
+
+[node name="Camera" type="Camera3D" parent="."]
+fov = 62.0
+near = 0.05
+far = 3000.0
+
+[node name="Ghost" type="Node3D" parent="."]
+
+[node name="Trail" type="MeshInstance3D" parent="."]
+cast_shadow = 0
+
+[node name="Blast" type="Node3D" parent="."]
+
+[node name="Sphere" type="MeshInstance3D" parent="Blast"]
+cast_shadow = 0
+mesh = SubResource("SphereMesh_blast")
+
+[node name="Flash" type="OmniLight3D" parent="Blast"]
+light_color = Color(1, 0.694118, 0.372549, 1)
+light_energy = 0.0
+omni_range = 12.0
+
+[node name="ImpactMarker" type="Node3D" parent="."]
+
+[node name="Pin" type="MeshInstance3D" parent="ImpactMarker"]
+cast_shadow = 0
+mesh = SubResource("SphereMesh_pin")
+
+[node name="Distance" type="Label3D" parent="ImpactMarker"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.2, 0)
+pixel_size = 0.009
+billboard = 1
+shaded = false
+text = "0.00 m from centre"
+font_size = 48
+outline_size = 16
+modulate = Color(0.137255, 0.14902, 0.172549, 1)
+outline_modulate = Color(0.964706, 0.945098, 0.905882, 0.9)
+
+[node name="UI" type="CanvasLayer" parent="."]
+layer = 2
+
+[node name="ReplayUI" type="Control" parent="UI"]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("2_ui")
+
+[node name="Header" type="VBoxContainer" parent="UI/ReplayUI"]
+layout_mode = 1
+anchors_preset = 0
+offset_left = 26.0
+offset_top = 22.0
+offset_right = 470.0
+offset_bottom = 200.0
+mouse_filter = 2
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="UI/ReplayUI/Header"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.137255, 0.14902, 0.172549, 1)
+theme_override_fonts/font = ExtResource("3_bold")
+theme_override_font_sizes/font_size = 26
+text = "REPLAY - LEVEL 1  FIRST SHOT"
+
+[node name="ReadoutBox" type="PanelContainer" parent="UI/ReplayUI/Header"]
+layout_mode = 2
+size_flags_horizontal = 0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_readout")
+
+[node name="Readout" type="HBoxContainer" parent="UI/ReplayUI/Header/ReadoutBox"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 18
+
+[node name="Keys" type="Label" parent="UI/ReplayUI/Header/ReadoutBox/Readout"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.482353, 0.505882, 0.552941, 1)
+theme_override_font_sizes/font_size = 17
+text = "phase
+t
+speed
+altitude"
+
+[node name="Values" type="Label" parent="UI/ReplayUI/Header/ReadoutBox/Readout"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.137255, 0.14902, 0.172549, 1)
+theme_override_font_sizes/font_size = 17
+text = "MOTOR
+-0.00 s
+0 m/s
+0.0 m"
+horizontal_alignment = 2
+
+[node name="Hint" type="Label" parent="UI/ReplayUI"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -560.0
+offset_top = -152.0
+offset_right = 560.0
+offset_bottom = -126.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.482353, 0.505882, 0.552941, 1)
+theme_override_font_sizes/font_size = 15
+text = "Drag to orbit the rocket   Scroll to zoom   Space play/pause   Left/Right step a frame   R restart   Esc back to the range   Enter next level"
+horizontal_alignment = 1
+
+[node name="Bar" type="PanelContainer" parent="UI/ReplayUI"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -104.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_bar")
+
+[node name="Margin" type="MarginContainer" parent="UI/ReplayUI/Bar"]
+layout_mode = 2
+theme_override_constants/margin_left = 26
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 26
+theme_override_constants/margin_bottom = 12
+
+[node name="Rows" type="VBoxContainer" parent="UI/ReplayUI/Bar/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Transport" type="HBoxContainer" parent="UI/ReplayUI/Bar/Margin/Rows"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="PlayButton" type="Button" parent="UI/ReplayUI/Bar/Margin/Rows/Transport"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(96, 34)
+layout_mode = 2
+focus_mode = 0
+text = "PAUSE"
+
+[node name="Timeline" type="HSlider" parent="UI/ReplayUI/Bar/Margin/Rows/Transport"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 34)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+focus_mode = 0
+max_value = 1.0
+step = 0.001
+
+[node name="TimeLabel" type="Label" parent="UI/ReplayUI/Bar/Margin/Rows/Transport"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(140, 0)
+layout_mode = 2
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.137255, 0.14902, 0.172549, 1)
+theme_override_font_sizes/font_size = 17
+text = "0.00 / 0.00 s"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Options" type="HBoxContainer" parent="UI/ReplayUI/Bar/Margin/Rows"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="SpeedCaption" type="Label" parent="UI/ReplayUI/Bar/Margin/Rows/Options"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.482353, 0.505882, 0.552941, 1)
+theme_override_font_sizes/font_size = 15
+text = "SPEED"
+vertical_alignment = 1
+
+[node name="SpeedRow" type="HBoxContainer" parent="UI/ReplayUI/Bar/Margin/Rows/Options"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Spacer" type="Control" parent="UI/ReplayUI/Bar/Margin/Rows/Options"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="RestartButton" type="Button" parent="UI/ReplayUI/Bar/Margin/Rows/Options"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(110, 30)
+layout_mode = 2
+focus_mode = 0
+text = "REPLAY"
+
+[node name="NextButton" type="Button" parent="UI/ReplayUI/Bar/Margin/Rows/Options"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(190, 30)
+layout_mode = 2
+focus_mode = 0
+text = "NEXT LEVEL"

@@ -63,6 +63,7 @@ const CROUCH_EYE: float = 1.0
 @onready var ceiling_check: RayCast3D = $CeilingCheck
 @onready var interact_ray: RayCast3D = $Head/Camera3D/InteractRay
 @onready var weapon_rig: WeaponRig = %WeaponRig
+@onready var viewmodel_layer: CanvasLayer = $Head/Camera3D/ViewmodelLayer
 
 ## Mouse movement this frame, in pixels. The viewmodel reads it for sway.
 var look_delta: Vector2 = Vector2.ZERO
@@ -302,6 +303,17 @@ func set_look(yaw_degrees: float, pitch_degrees: float) -> void:
 	_recoil_target = Vector2.ZERO
 	_trauma = 0.0
 	_apply_view_offsets()
+
+
+## Hides the first-person weapon. The replay camera takes over the 3D view but
+## the viewmodel lives on its own CanvasLayer, so it has to be told to go away.
+func set_viewmodel_visible(value: bool) -> void:
+	viewmodel_layer.visible = value
+
+
+## Hands the 3D view back to the player after a cutscene camera borrowed it.
+func make_camera_current() -> void:
+	camera.current = true
 
 
 func get_horizontal_speed() -> float:

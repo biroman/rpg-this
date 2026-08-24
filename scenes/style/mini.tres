@@ -1,0 +1,126 @@
+[gd_resource type="Theme" load_steps=11 format=3]
+
+[ext_resource type="FontFile" path="res://assets/fonts/Nunito-Regular.ttf" id="1_regular"]
+[ext_resource type="FontFile" path="res://assets/fonts/Nunito-SemiBold.ttf" id="2_semibold"]
+
+[sub_resource type="StyleBoxFlat" id="Btn_normal"]
+content_margin_left = 22.0
+content_margin_top = 11.0
+content_margin_right = 22.0
+content_margin_bottom = 11.0
+bg_color = Color(0.137255, 0.14902, 0.172549, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="Btn_hover"]
+content_margin_left = 22.0
+content_margin_top = 11.0
+content_margin_right = 22.0
+content_margin_bottom = 11.0
+bg_color = Color(0.231373, 0.290196, 0.419608, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="Btn_pressed"]
+content_margin_left = 22.0
+content_margin_top = 11.0
+content_margin_right = 22.0
+content_margin_bottom = 11.0
+bg_color = Color(0.686275, 0.443137, 0.00784314, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="Btn_disabled"]
+content_margin_left = 22.0
+content_margin_top = 11.0
+content_margin_right = 22.0
+content_margin_bottom = 11.0
+bg_color = Color(0.890196, 0.858824, 0.788235, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="Btn_focus"]
+content_margin_left = 22.0
+content_margin_top = 11.0
+content_margin_right = 22.0
+content_margin_bottom = 11.0
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.984314, 0.74902, 0.270588, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="Panel_card"]
+content_margin_left = 26.0
+content_margin_top = 22.0
+content_margin_right = 26.0
+content_margin_bottom = 22.0
+bg_color = Color(0.964706, 0.945098, 0.905882, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.890196, 0.858824, 0.788235, 1)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+
+[sub_resource type="StyleBoxFlat" id="Bar_track"]
+content_margin_top = 3.0
+content_margin_bottom = 3.0
+bg_color = Color(0.890196, 0.858824, 0.788235, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="Bar_fill"]
+content_margin_top = 3.0
+content_margin_bottom = 3.0
+bg_color = Color(0.984314, 0.74902, 0.270588, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxLine" id="Rule"]
+color = Color(0.890196, 0.858824, 0.788235, 1)
+thickness = 1
+
+[resource]
+default_font = ExtResource("1_regular")
+default_font_size = 17
+Button/colors/font_color = Color(0.964706, 0.945098, 0.905882, 1)
+Button/colors/font_disabled_color = Color(0.482353, 0.505882, 0.552941, 1)
+Button/colors/font_focus_color = Color(0.964706, 0.945098, 0.905882, 1)
+Button/colors/font_hover_color = Color(0.964706, 0.945098, 0.905882, 1)
+Button/colors/font_pressed_color = Color(0.964706, 0.945098, 0.905882, 1)
+Button/fonts/font = ExtResource("2_semibold")
+Button/font_sizes/font_size = 17
+Button/styles/disabled = SubResource("Btn_disabled")
+Button/styles/focus = SubResource("Btn_focus")
+Button/styles/hover = SubResource("Btn_hover")
+Button/styles/normal = SubResource("Btn_normal")
+Button/styles/pressed = SubResource("Btn_pressed")
+HSeparator/styles/separator = SubResource("Rule")
+HSlider/styles/grabber_area = SubResource("Bar_fill")
+HSlider/styles/grabber_area_highlight = SubResource("Bar_fill")
+HSlider/styles/slider = SubResource("Bar_track")
+Label/colors/font_color = Color(0.137255, 0.14902, 0.172549, 1)
+PanelContainer/styles/panel = SubResource("Panel_card")
+ProgressBar/styles/background = SubResource("Bar_track")
+ProgressBar/styles/fill = SubResource("Bar_fill")

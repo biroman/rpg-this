@@ -3,7 +3,7 @@ extends Node
 ##
 ## Autoloaded as `GameState`. Runs while the tree is paused so it can unpause.
 
-enum State { BOOT, PLAYING, PAUSED }
+enum State { BOOT, PLAYING, PAUSED, CINEMATIC }
 
 var state: State = State.BOOT
 var player: CharacterBody3D = null
@@ -31,11 +31,13 @@ func start_play() -> void:
 
 
 func toggle_pause() -> void:
+	if state == State.CINEMATIC:
+		return
 	set_paused(state != State.PAUSED)
 
 
 func set_paused(value: bool) -> void:
-	if state == State.BOOT:
+	if state == State.BOOT or state == State.CINEMATIC:
 		return
 	if value == (state == State.PAUSED):
 		return
@@ -53,6 +55,37 @@ func set_paused(value: bool) -> void:
 
 func is_playing() -> bool:
 	return state == State.PLAYING
+
+
+## Freezes the whole tree for a replay. Anything that has to keep running
+## through it needs `PROCESS_MODE_ALWAYS`.
+##
+## This deliberately does not go through `set_paused()`: the pause menu must not
+## appear on top of a cutscene, and Esc must not unfreeze it.
+##
+## Clearing a level does not use this. The target coming apart is the payoff for
+## the shot, so the range stays live behind the result card and only the replay,
+## which takes the camera anyway, stops the world.
+func enter_cinematic() -> void:
+	if state == State.CINEMATIC or state == State.BOOT:
+		return
+	state = State.CINEMATIC
+	get_tree().paused = true
+	release_mouse()
+	EventBus.cinematic_changed.emit(true)
+
+
+func exit_cinematic() -> void:
+	if state != State.CINEMATIC:
+		return
+	state = State.PLAYING
+	get_tree().paused = false
+	capture_mouse()
+	EventBus.cinematic_changed.emit(false)
+
+
+func is_cinematic() -> bool:
+	return state == State.CINEMATIC
 
 
 func capture_mouse() -> void:
@@ -76,6 +109,8 @@ func register_world(w: Node3D) -> void:
 func restart() -> void:
 	set_paused(false)
 	state = State.BOOT
+	get_tree().paused = false
+	capture_mouse()
 	get_tree().reload_current_scene()
 
 

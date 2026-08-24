@@ -1,17 +1,16 @@
-[gd_scene load_steps=11 format=3]
+[gd_scene load_steps=10 format=3]
 
 [ext_resource type="Script" path="res://scenes/world/world.gd" id="1_world"]
 [ext_resource type="Shader" path="res://assets/materials/ground_grid.gdshader" id="2_ground"]
-[ext_resource type="PackedScene" path="res://scenes/props/target.tscn" id="3_target"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_sky"]
-sky_top_color = Color(0.223529, 0.403922, 0.741176, 1)
-sky_horizon_color = Color(0.729412, 0.807843, 0.890196, 1)
-sky_curve = 0.15
-ground_bottom_color = Color(0.176471, 0.196078, 0.184314, 1)
-ground_horizon_color = Color(0.729412, 0.807843, 0.890196, 1)
-sun_angle_max = 12.0
-sun_curve = 0.08
+sky_top_color = Color(0.662745, 0.85098, 0.917647, 1)
+sky_horizon_color = Color(0.85098, 0.929412, 0.960784, 1)
+sky_curve = 0.25
+ground_bottom_color = Color(0.964706, 0.945098, 0.905882, 1)
+ground_horizon_color = Color(0.913725, 0.937255, 0.933333, 1)
+sun_angle_max = 30.0
+sun_curve = 0.02
 
 [sub_resource type="Sky" id="Sky_env"]
 sky_material = SubResource("ProceduralSkyMaterial_sky")
@@ -19,35 +18,31 @@ sky_material = SubResource("ProceduralSkyMaterial_sky")
 [sub_resource type="Environment" id="Environment_main"]
 background_mode = 2
 sky = SubResource("Sky_env")
-ambient_light_source = 3
-ambient_light_sky_contribution = 0.85
-tonemap_mode = 4
-tonemap_white = 6.0
-ssao_enabled = true
-ssao_radius = 1.5
-ssao_intensity = 1.4
-glow_enabled = true
-glow_intensity = 0.35
+ambient_light_source = 2
+ambient_light_color = Color(0.94902, 0.945098, 0.933333, 1)
+ambient_light_energy = 0.8
+tonemap_mode = 0
+tonemap_white = 1.0
 fog_enabled = true
-fog_light_color = Color(0.729412, 0.788235, 0.87451, 1)
-fog_sun_scatter = 0.15
-fog_density = 0.0012
-fog_sky_affect = 0.25
+fog_light_color = Color(0.94902, 0.933333, 0.909804, 1)
+fog_sun_scatter = 0.0
+fog_density = 0.0022
+fog_sky_affect = 0.1
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ground"]
 shader = ExtResource("2_ground")
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_ground"]
 material = SubResource("ShaderMaterial_ground")
-size = Vector2(1000, 1000)
+size = Vector2(480, 480)
 subdivide_width = 16
 subdivide_depth = 16
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ground"]
-size = Vector3(1000, 2, 1000)
+size = Vector3(480, 2, 480)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_wall"]
-size = Vector3(1002, 220, 4)
+size = Vector3(482, 220, 4)
 
 [node name="World" type="Node3D"]
 script = ExtResource("1_world")
@@ -57,14 +52,16 @@ environment = SubResource("Environment_main")
 
 [node name="Sun" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.8192, 0, 0.5736, 0.4394, 0.6428, -0.6275, -0.3687, 0.766, 0.5266, 0, 40, 0)
-light_color = Color(1, 0.964706, 0.894118, 1)
-light_energy = 1.15
+light_color = Color(1, 0.988235, 0.952941, 1)
+light_energy = 0.42
 shadow_enabled = true
+shadow_opacity = 0.34
+shadow_blur = 2.5
 directional_shadow_split_1 = 0.06
 directional_shadow_split_2 = 0.16
 directional_shadow_split_3 = 0.42
 directional_shadow_blend_splits = true
-directional_shadow_max_distance = 500.0
+directional_shadow_max_distance = 260.0
 
 [node name="Ground" type="StaticBody3D" parent="."]
 collision_layer = 1
@@ -80,7 +77,7 @@ shape = SubResource("BoxShape3D_ground")
 [node name="Boundaries" type="Node3D" parent="."]
 
 [node name="North" type="StaticBody3D" parent="Boundaries"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 108, -501)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 108, -241)
 collision_layer = 1
 collision_mask = 0
 
@@ -88,7 +85,7 @@ collision_mask = 0
 shape = SubResource("BoxShape3D_wall")
 
 [node name="South" type="StaticBody3D" parent="Boundaries"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 108, 501)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 108, 241)
 collision_layer = 1
 collision_mask = 0
 
@@ -96,7 +93,7 @@ collision_mask = 0
 shape = SubResource("BoxShape3D_wall")
 
 [node name="East" type="StaticBody3D" parent="Boundaries"]
-transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 501, 108, 0)
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 241, 108, 0)
 collision_layer = 1
 collision_mask = 0
 
@@ -104,7 +101,7 @@ collision_mask = 0
 shape = SubResource("BoxShape3D_wall")
 
 [node name="West" type="StaticBody3D" parent="Boundaries"]
-transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -501, 108, 0)
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -241, 108, 0)
 collision_layer = 1
 collision_mask = 0
 
@@ -112,9 +109,6 @@ collision_mask = 0
 shape = SubResource("BoxShape3D_wall")
 
 [node name="Props" type="Node3D" parent="."]
-
-[node name="Target" parent="Props" instance=ExtResource("3_target")]
-transform = Transform3D(3.5, 0, 0, 0, 3.5, 0, 0, 0, 3.5, 0, 0, -350)
 
 [node name="Projectiles" type="Node3D" parent="."]
 

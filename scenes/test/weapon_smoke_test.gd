@@ -17,7 +17,12 @@ var _impacts: int = 0
 var _last_report: Dictionary = {}
 
 
+@onready var levels: LevelManager = $Main/LevelManager
+
+
 func _ready() -> void:
+	# Fire freely: no result panel, no replay, no frozen tree between shots.
+	levels.interactive = false
 	EventBus.explosion_happened.connect(_on_explosion)
 	EventBus.target_hit.connect(_on_report)
 	EventBus.target_missed.connect(_on_report)

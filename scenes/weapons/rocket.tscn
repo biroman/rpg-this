@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3]
+[gd_scene load_steps=15 format=3]
 
 [ext_resource type="Script" path="res://scenes/weapons/rocket.gd" id="1_rocket"]
 [ext_resource type="PackedScene" path="res://scenes/weapons/explosion.tscn" id="2_explosion"]
@@ -9,21 +9,26 @@
 radius = 0.09
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_body"]
-albedo_color = Color(0.211765, 0.231373, 0.180392, 1)
-metallic = 0.25
-roughness = 0.55
+albedo_color = Color(0.231373, 0.290196, 0.419608, 1)
+roughness = 1.0
+specular_mode = 2
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nose"]
-albedo_color = Color(0.16, 0.152941, 0.141176, 1)
-metallic = 0.4
-roughness = 0.45
+albedo_color = Color(0.956863, 0.321569, 0.431373, 1)
+roughness = 1.0
+specular_mode = 2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fin"]
+albedo_color = Color(0.964706, 0.945098, 0.905882, 1)
+roughness = 1.0
+specular_mode = 2
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_body"]
 material = SubResource("StandardMaterial3D_body")
 top_radius = 0.045
 bottom_radius = 0.045
 height = 0.3
-radial_segments = 14
+radial_segments = 24
 rings = 1
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_nose"]
@@ -31,11 +36,11 @@ material = SubResource("StandardMaterial3D_nose")
 top_radius = 0.004
 bottom_radius = 0.052
 height = 0.16
-radial_segments = 14
+radial_segments = 24
 rings = 1
 
 [sub_resource type="BoxMesh" id="BoxMesh_fin"]
-material = SubResource("StandardMaterial3D_nose")
+material = SubResource("StandardMaterial3D_fin")
 size = Vector3(0.004, 0.09, 0.1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_particle"]
@@ -51,31 +56,12 @@ disable_receive_shadows = true
 [sub_resource type="QuadMesh" id="QuadMesh_particle"]
 material = SubResource("StandardMaterial3D_particle")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_trail"]
-transparency = 1
-shading_mode = 0
-vertex_color_use_as_albedo = true
-albedo_texture = ExtResource("3_puff")
-billboard_mode = 3
-billboard_keep_scale = true
-disable_receive_shadows = true
-
-[sub_resource type="QuadMesh" id="QuadMesh_trail"]
-material = SubResource("StandardMaterial3D_trail")
-
 [sub_resource type="Gradient" id="Gradient_fire"]
 offsets = PackedFloat32Array(0, 0.35, 1)
-colors = PackedColorArray(1, 0.941176, 0.72549, 1, 1, 0.501961, 0.145098, 0.9, 0.298039, 0.0862745, 0.027451, 0)
+colors = PackedColorArray(1, 0.980392, 0.905882, 1, 0.984314, 0.74902, 0.270588, 0.95, 0.941176, 0.301961, 0.407843, 0)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_fire"]
 gradient = SubResource("Gradient_fire")
-
-[sub_resource type="Gradient" id="Gradient_trail"]
-offsets = PackedFloat32Array(0, 0.12, 1)
-colors = PackedColorArray(0.85, 0.83, 0.8, 0, 0.729412, 0.717647, 0.698039, 0.5, 0.529412, 0.529412, 0.529412, 0)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_trail"]
-gradient = SubResource("Gradient_trail")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_flame"]
 emission_shape = 1
@@ -91,24 +77,6 @@ scale_min = 0.22
 scale_max = 0.55
 color_ramp = SubResource("GradientTexture1D_fire")
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_trail"]
-emission_shape = 1
-emission_sphere_radius = 0.05
-direction = Vector3(0, 1, 0)
-spread = 180.0
-initial_velocity_min = 0.15
-initial_velocity_max = 0.9
-gravity = Vector3(0, 0.55, 0)
-damping_min = 0.2
-damping_max = 0.8
-angle_min = -180.0
-angle_max = 180.0
-angular_velocity_min = -18.0
-angular_velocity_max = 18.0
-scale_min = 0.5
-scale_max = 1.7
-color_ramp = SubResource("GradientTexture1D_trail")
-
 [node name="Rocket" type="RigidBody3D"]
 collision_layer = 16
 collision_mask = 5
@@ -117,15 +85,15 @@ gravity_scale = 1.0
 continuous_cd = true
 contact_monitor = true
 max_contacts_reported = 4
-linear_damp = 0.02
+linear_damp = 0.05
 angular_damp = 8.0
 script = ExtResource("1_rocket")
-muzzle_speed = 115.0
-ignition_delay = 0.1
-burn_time = 0.7
-thrust_acceleration = 257.0
-max_speed = 300.0
-life_time = 8.0
+muzzle_speed = 32.0
+ignition_delay = 0.09
+burn_time = 1.2
+thrust_acceleration = 45.0
+max_speed = 90.0
+life_time = 5.0
 explosion_scene = ExtResource("2_explosion")
 motor_sound = ExtResource("4_motor")
 
@@ -139,7 +107,7 @@ transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0, 0)
 mesh = SubResource("CylinderMesh_body")
 
 [node name="Nose" type="MeshInstance3D" parent="Visual"]
-transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0, -0.23)
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 0, -0.23)
 mesh = SubResource("CylinderMesh_nose")
 
 [node name="Fin1" type="MeshInstance3D" parent="Visual"]
@@ -169,18 +137,11 @@ draw_pass_1 = SubResource("QuadMesh_particle")
 
 [node name="MotorLight" type="OmniLight3D" parent="Visual"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.3)
-light_color = Color(1, 0.647059, 0.298039, 1)
-light_energy = 3.5
+light_color = Color(0.984314, 0.74902, 0.270588, 1)
+light_energy = 3.0
 omni_range = 9.0
-
-[node name="SmokeTrail" type="GPUParticles3D" parent="."]
-emitting = false
-amount = 90
-lifetime = 2.2
-process_material = SubResource("ParticleProcessMaterial_trail")
-draw_pass_1 = SubResource("QuadMesh_trail")
 
 [node name="Audio" type="AudioStreamPlayer3D" parent="."]
 volume_db = -2.0
 unit_size = 12.0
-max_distance = 700.0
+max_distance = 220.0

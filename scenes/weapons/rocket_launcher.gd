@@ -27,8 +27,15 @@ extends Weapon
 @onready var loaded_rocket: Node3D = $Model/LoadedRocket
 
 
+## Radius taken off every edge and rim on the launcher. Authored square because
+## square is what you can place by eye; rounded here because nothing in this
+## world has a hard edge.
+@export var edge_radius: float = 0.01
+
+
 func _ready() -> void:
 	super()
+	Rounded.soften($Model, edge_radius)
 	EventBus.weapon_reload_finished.connect(_on_reload_finished)
 
 
