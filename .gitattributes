@@ -10,3 +10,8 @@
 *.ogg    binary
 *.wav    binary
 *.glb    binary
+
+# Keep Windows-facing text files readable in Notepad
+*.txt    text eol=crlf
+*.cmd    text eol=crlf
+*.ps1    text eol=crlf

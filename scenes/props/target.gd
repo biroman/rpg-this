@@ -20,7 +20,7 @@ extends StaticBody3D
 ## Best points a blast-only hit can earn.
 @export var max_blast_points: int = 4
 ## Report near misses that land within this distance of the centre.
-@export var report_miss_within: float = 120.0
+@export var report_miss_within: float = 400.0
 
 @export_group("Feedback")
 @export var hit_sound: AudioStream
@@ -96,8 +96,12 @@ func _build_report(direct: bool, blast: bool, distance: float, impact: Vector3, 
 
 
 func _ring_index(distance: float) -> int:
+	# Ring radii are authored at scale 1, so normalise by the node's own scale.
+	# That keeps scoring correct when the target is scaled up for long ranges.
+	var s: float = maxf(global_basis.get_scale().x, 0.0001)
+	var local_distance: float = distance / s
 	for i in ring_radii.size():
-		if distance <= ring_radii[i]:
+		if local_distance <= ring_radii[i]:
 			return i
 	return -1
 

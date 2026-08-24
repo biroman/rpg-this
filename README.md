@@ -21,6 +21,18 @@ Open the folder in Godot 4.7 and press F5, or run the `Main` scene.
 | F3 | Debug overlay |
 | F11 | Fullscreen |
 
+## Shipping a build
+
+Players run a self-updating `FlatWorld.exe`: on launch it checks GitHub Releases
+and installs a newer build if there is one. To put everybody on your latest work:
+
+```powershell
+.	oolselease.ps1
+```
+
+See [docs/RELEASING.md](docs/RELEASING.md) for setup, options and how the
+updater behaves.
+
 ## Structure
 
 ```

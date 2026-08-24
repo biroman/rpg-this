@@ -8,7 +8,7 @@ extends Node3D
 
 @export_group("Extent")
 ## Half-size of the playable area in metres. 240 -> a 480x480 m field.
-@export var half_extent: float = 240.0
+@export var half_extent: float = 500.0
 
 @onready var props_root: Node3D = $Props
 @onready var projectiles_root: Node3D = $Projectiles

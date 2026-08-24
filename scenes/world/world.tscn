@@ -31,7 +31,7 @@ glow_intensity = 0.35
 fog_enabled = true
 fog_light_color = Color(0.729412, 0.788235, 0.87451, 1)
 fog_sun_scatter = 0.15
-fog_density = 0.0035
+fog_density = 0.0012
 fog_sky_affect = 0.25
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ground"]
@@ -39,15 +39,15 @@ shader = ExtResource("2_ground")
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_ground"]
 material = SubResource("ShaderMaterial_ground")
-size = Vector2(480, 480)
+size = Vector2(1000, 1000)
 subdivide_width = 16
 subdivide_depth = 16
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ground"]
-size = Vector3(480, 2, 480)
+size = Vector3(1000, 2, 1000)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_wall"]
-size = Vector3(482, 220, 4)
+size = Vector3(1002, 220, 4)
 
 [node name="World" type="Node3D"]
 script = ExtResource("1_world")
@@ -64,7 +64,7 @@ directional_shadow_split_1 = 0.06
 directional_shadow_split_2 = 0.16
 directional_shadow_split_3 = 0.42
 directional_shadow_blend_splits = true
-directional_shadow_max_distance = 260.0
+directional_shadow_max_distance = 500.0
 
 [node name="Ground" type="StaticBody3D" parent="."]
 collision_layer = 1
@@ -80,7 +80,7 @@ shape = SubResource("BoxShape3D_ground")
 [node name="Boundaries" type="Node3D" parent="."]
 
 [node name="North" type="StaticBody3D" parent="Boundaries"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 108, -241)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 108, -501)
 collision_layer = 1
 collision_mask = 0
 
@@ -88,7 +88,7 @@ collision_mask = 0
 shape = SubResource("BoxShape3D_wall")
 
 [node name="South" type="StaticBody3D" parent="Boundaries"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 108, 241)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 108, 501)
 collision_layer = 1
 collision_mask = 0
 
@@ -96,7 +96,7 @@ collision_mask = 0
 shape = SubResource("BoxShape3D_wall")
 
 [node name="East" type="StaticBody3D" parent="Boundaries"]
-transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 241, 108, 0)
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 501, 108, 0)
 collision_layer = 1
 collision_mask = 0
 
@@ -104,7 +104,7 @@ collision_mask = 0
 shape = SubResource("BoxShape3D_wall")
 
 [node name="West" type="StaticBody3D" parent="Boundaries"]
-transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -241, 108, 0)
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -501, 108, 0)
 collision_layer = 1
 collision_mask = 0
 
@@ -114,7 +114,7 @@ shape = SubResource("BoxShape3D_wall")
 [node name="Props" type="Node3D" parent="."]
 
 [node name="Target" parent="Props" instance=ExtResource("3_target")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -100)
+transform = Transform3D(3.5, 0, 0, 0, 3.5, 0, 0, 0, 3.5, 0, 0, -350)
 
 [node name="Projectiles" type="Node3D" parent="."]
 

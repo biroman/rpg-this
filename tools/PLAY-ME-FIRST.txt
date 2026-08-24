@@ -1,0 +1,44 @@
+FLATWORLD
+=========
+
+TO PLAY
+-------
+Double-click  FlatWorld.exe
+
+
+THE FIRST TIME, WINDOWS MAY WARN YOU
+------------------------------------
+A blue box saying "Windows protected your PC" can appear. This happens with
+every small game that has not paid for a code-signing certificate.
+
+    Click "More info"  ->  click "Run anyway"
+
+You will only ever see this once.
+
+
+UPDATES
+-------
+You do not have to download anything again. Every time you start
+FlatWorld.exe it checks for a new version and installs it by itself. If there
+is an update you will see a progress bar for a few seconds, then the game
+restarts and you are on the newest version.
+
+If you are offline, it just starts the version you already have.
+
+
+CONTROLS
+--------
+WASD      move
+Shift     sprint
+Space     jump
+Mouse     look
+LMB       fire rocket
+R         reload
+Esc       pause
+F3        debug info
+
+
+SOMETHING BROKE?
+----------------
+Delete the whole FlatWorld folder and download the newest ZIP again from:
+https://github.com/biroman/rpg-this/releases/latest
